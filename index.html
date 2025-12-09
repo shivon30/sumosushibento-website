@@ -440,6 +440,7 @@
             padding: 0.75rem 1rem;
             border-radius: 15px;
             word-wrap: break-word;
+            white-space: pre-line;
         }
         
         .message.bot .message-content {
@@ -453,6 +454,20 @@
             background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%);
             color: white;
             border-bottom-right-radius: 5px;
+        }
+        
+        .message-content a {
+            color: #3b82f6;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        
+        .message.bot .message-content a {
+            color: #1e3a8a;
+        }
+        
+        .message.user .message-content a {
+            color: white;
         }
         
         .chatbot-input-area {
@@ -771,32 +786,36 @@
         // Knowledge Base
         const knowledgeBase = {
             menu: {
-                response: "🍱 Our menu features:\n\n🍣 Sushi Rolls - $8-$15\n🍱 Bento Boxes - $12-$18\n🍜 Ramen Bowls - $10-$14\n🥟 Appetizers - $5-$8\n\nWould you like recommendations based on dietary preferences?",
+                response: "🍱 Our full menu with detailed pricing is available here:\n\n👉 <a href='https://dinesafe.sumosushibento.com/' target='_blank'>View Complete Menu & Pricing</a>\n\nWe offer:\n🍣 Sushi Rolls & Nigiri\n🍱 Bento Boxes\n🍜 Ramen & Noodles\n🥟 Appetizers & Sides\n🍵 Beverages\n\nWould you like recommendations based on dietary preferences?",
                 quickReplies: ['Vegetarian Options', 'Gluten-Free', 'Chef Specials']
             },
             reservation: {
-                response: "📅 I'd be happy to help with reservations!\n\nPlease provide:\n• Date & Time\n• Number of guests\n• Any special requests\n\nOr call us at: (555) 123-4567",
+                response: "📅 I'd be happy to help with reservations!\n\nPlease provide:\n• Date & Time\n• Number of guests\n• Any special requests\n\nOr call us directly at: (555) 123-4567\n\nYou can also visit our DineSafe page for more contact options.",
                 quickReplies: ['Today 7PM', 'Tomorrow 6PM', 'Weekend']
             },
             hours: {
-                response: "🕐 Opening Hours:\n\nMon-Thu: 11:30 AM - 10:00 PM\nFri-Sat: 11:30 AM - 11:00 PM\nSunday: 12:00 PM - 9:00 PM\n\nHappy Hour: 3-6 PM Daily! 🍶",
+                response: "🕐 Opening Hours:\n\nMon-Thu: 11:30 AM - 10:00 PM\nFri-Sat: 11:30 AM - 11:00 PM\nSunday: 12:00 PM - 9:00 PM\n\nHappy Hour: 3-6 PM Daily! 🍶\n\nFor the most current hours, check our <a href='https://dinesafe.sumosushibento.com/' target='_blank'>DineSafe page</a>.",
                 quickReplies: ['Delivery Hours', 'Holiday Hours']
             },
             recommend: {
-                response: "⭐ Chef's Recommendations:\n\n1. Dragon Roll - Our signature!\n2. Chirashi Bowl - Fresh & colorful\n3. Tonkotsu Ramen - Rich & creamy\n4. Salmon Lover's Bento - Best value!\n\nAny dietary restrictions I should know?",
+                response: "⭐ Chef's Recommendations:\n\n1. Dragon Roll - Our signature creation!\n2. Chirashi Bowl - Fresh & colorful\n3. Tonkotsu Ramen - Rich & creamy\n4. Salmon Lover's Bento - Best value!\n\nFor complete menu details and pricing, visit:\n<a href='https://dinesafe.sumosushibento.com/' target='_blank'>Our Menu</a>\n\nAny dietary restrictions I should know?",
                 quickReplies: ['Vegetarian', 'Spicy Options', 'Kids Menu']
             },
             vegetarian: {
-                response: "🥬 Vegetarian Options:\n\n• Veggie Roll - $8\n• Avocado Cucumber Roll - $7\n• Vegetable Tempura - $9\n• Tofu Teriyaki Bento - $12\n• Miso Ramen (veggie broth) - $11\n\nAll made fresh daily!",
+                response: "🥬 Vegetarian Options:\n\n• Veggie Roll\n• Avocado Cucumber Roll\n• Vegetable Tempura\n• Tofu Teriyaki Bento\n• Miso Ramen (veggie broth)\n\nAll made fresh daily!\n\nFor detailed pricing, check our <a href='https://dinesafe.sumosushibento.com/' target='_blank'>full menu</a>.",
                 quickReplies: ['Order Now', 'Vegan Options']
             },
             delivery: {
-                response: "🚗 Delivery Info:\n\n• Free delivery over $25\n• Delivery radius: 5 miles\n• Average time: 30-45 mins\n• Available through our app or UberEats/DoorDash\n\nReady to order?",
+                response: "🚗 Delivery Info:\n\n• Free delivery over minimum order\n• Delivery radius: 5 miles\n• Average time: 30-45 mins\n• Available through our app or UberEats/DoorDash\n\nFor current delivery options and menu, visit:\n<a href='https://dinesafe.sumosushibento.com/' target='_blank'>DineSafe Page</a>\n\nReady to order?",
                 quickReplies: ['Order Online', 'Pickup Instead']
             },
+            location: {
+                response: "📍 Location & Contact:\n\nFind our complete location details, contact information, and health safety ratings on our DineSafe page:\n\n<a href='https://dinesafe.sumosushibento.com/' target='_blank'>Visit DineSafe Page</a>\n\nWe look forward to serving you!",
+                quickReplies: ['Get Directions', 'Call Us']
+            },
             default: {
-                response: "I understand you're asking about that. Let me help! Our team specializes in authentic Japanese cuisine. Would you like to know about our menu, make a reservation, or get recommendations?",
-                quickReplies: ['Menu', 'Reservations', 'Recommendations']
+                response: "I understand you're asking about that. Let me help! \n\nFor detailed menu, pricing, and location information, please visit:\n<a href='https://dinesafe.sumosushibento.com/' target='_blank'>Our DineSafe Page</a>\n\nOr I can help you with:",
+                quickReplies: ['Menu', 'Reservations', 'Recommendations', 'Hours']
             }
         };
 
@@ -841,7 +860,7 @@
             const lowerMessage = userMessage.toLowerCase();
             
             // Smart keyword matching
-            if (lowerMessage.includes('menu') || lowerMessage.includes('food') || lowerMessage.includes('eat')) {
+            if (lowerMessage.includes('menu') || lowerMessage.includes('food') || lowerMessage.includes('eat') || lowerMessage.includes('price') || lowerMessage.includes('cost')) {
                 return knowledgeBase.menu;
             } else if (lowerMessage.includes('reserv') || lowerMessage.includes('book') || lowerMessage.includes('table')) {
                 return knowledgeBase.reservation;
@@ -853,6 +872,8 @@
                 return knowledgeBase.vegetarian;
             } else if (lowerMessage.includes('deliver') || lowerMessage.includes('order') || lowerMessage.includes('takeout')) {
                 return knowledgeBase.delivery;
+            } else if (lowerMessage.includes('location') || lowerMessage.includes('address') || lowerMessage.includes('where') || lowerMessage.includes('contact')) {
+                return knowledgeBase.location;
             } else {
                 return knowledgeBase.default;
             }
@@ -898,7 +919,9 @@
                 'pickupinstead': 'I prefer pickup',
                 'orderonline': 'How do I order online?',
                 'deliveryhours': 'What are delivery hours?',
-                'holidayhours': 'What are your holiday hours?'
+                'holidayhours': 'What are your holiday hours?',
+                'getdirections': 'How do I get there?',
+                'callus': 'What is your phone number?'
             };
             
             const message = topicMap[topic] || topic;
