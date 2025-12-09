@@ -300,7 +300,7 @@
             font-size: 1.3rem;
         }
         
-        /* Chatbot Widget - Blue & White */
+        /* AI Chatbot Widget */
         .chatbot {
             position: fixed;
             bottom: 2rem;
@@ -320,12 +320,250 @@
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            animation: pulse 2s infinite;
+            animation: chatPulse 2s infinite;
+            transition: all 0.3s ease;
         }
         
-        @keyframes pulse {
+        .chatbot-button:hover {
+            transform: scale(1.1);
+        }
+        
+        @keyframes chatPulse {
             0%, 100% { transform: scale(1); box-shadow: 0 5px 20px rgba(59,130,246,0.5); }
-            50% { transform: scale(1.1); box-shadow: 0 8px 30px rgba(59,130,246,0.8); }
+            50% { transform: scale(1.05); box-shadow: 0 8px 30px rgba(59,130,246,0.8); }
+        }
+        
+        /* Chatbot Window */
+        .chatbot-window {
+            position: fixed;
+            bottom: 100px;
+            right: 2rem;
+            width: 380px;
+            height: 550px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 2px solid #3b82f6;
+            z-index: 999;
+        }
+        
+        .chatbot-window.active {
+            display: flex;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .chatbot-header {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chatbot-header h3 {
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .close-chat {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        
+        .close-chat:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .chatbot-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: #f8fafc;
+        }
+        
+        .message {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            animation: messageSlide 0.3s ease-out;
+        }
+        
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .message.bot {
+            justify-content: flex-start;
+        }
+        
+        .message.user {
+            justify-content: flex-end;
+        }
+        
+        .message-content {
+            max-width: 75%;
+            padding: 0.75rem 1rem;
+            border-radius: 15px;
+            word-wrap: break-word;
+        }
+        
+        .message.bot .message-content {
+            background: white;
+            color: #1e3a8a;
+            border: 1px solid #dbeafe;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .message.user .message-content {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%);
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .chatbot-input-area {
+            padding: 1rem;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .chatbot-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #dbeafe;
+            border-radius: 25px;
+            outline: none;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+        
+        .chatbot-input:focus {
+            border-color: #3b82f6;
+        }
+        
+        .send-button {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+        
+        .send-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(59,130,246,0.4);
+        }
+        
+        .send-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .typing-indicator {
+            display: none;
+            padding: 0.75rem 1rem;
+            background: white;
+            border: 1px solid #dbeafe;
+            border-radius: 15px;
+            border-bottom-left-radius: 5px;
+            max-width: 75%;
+        }
+        
+        .typing-indicator.active {
+            display: block;
+        }
+        
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .typing-dots span {
+            width: 8px;
+            height: 8px;
+            background: #3b82f6;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite;
+        }
+        
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+        
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .quick-reply-btn {
+            background: white;
+            border: 2px solid #3b82f6;
+            color: #1e3a8a;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+        
+        .quick-reply-btn:hover {
+            background: #3b82f6;
+            color: white;
+            transform: translateY(-2px);
         }
         
         /* Scroll animations */
@@ -386,6 +624,12 @@
             .hero p { font-size: 1.2rem; }
             .features h2, .gallery h2 { font-size: 2rem; }
             .logo { width: 150px; height: 150px; }
+            .chatbot-window {
+                width: calc(100% - 2rem);
+                right: 1rem;
+                left: 1rem;
+                height: 500px;
+            }
         }
     </style>
 </head>
@@ -478,14 +722,196 @@
         </div>
     </section>
 
-    <!-- Chatbot Widget -->
+    <!-- AI Chatbot Widget -->
     <div class="chatbot">
-        <button class="chatbot-button" onclick="alert('AI Assistant: Hello! How can I help you today? 🍱')">
+        <button class="chatbot-button" onclick="toggleChat()">
             💬
         </button>
     </div>
 
+    <!-- Chatbot Window -->
+    <div class="chatbot-window" id="chatWindow">
+        <div class="chatbot-header">
+            <h3>🤖 AI Assistant</h3>
+            <button class="close-chat" onclick="toggleChat()">✕</button>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="message bot">
+                <div class="message-content">
+                    👋 Hello! I'm your AI assistant at Sumo Sushi Bento. How can I help you today?
+                    <div class="quick-replies">
+                        <button class="quick-reply-btn" onclick="sendQuickReply('menu')">View Menu</button>
+                        <button class="quick-reply-btn" onclick="sendQuickReply('reservation')">Make Reservation</button>
+                        <button class="quick-reply-btn" onclick="sendQuickReply('hours')">Opening Hours</button>
+                        <button class="quick-reply-btn" onclick="sendQuickReply('recommend')">Recommendations</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="typing-indicator" id="typingIndicator">
+            <div class="typing-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="chatbot-input-area">
+            <input type="text" class="chatbot-input" id="chatInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+            <button class="send-button" onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
     <script>
+        // AI Chatbot Logic
+        const chatWindow = document.getElementById('chatWindow');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        // Knowledge Base
+        const knowledgeBase = {
+            menu: {
+                response: "🍱 Our menu features:\n\n🍣 Sushi Rolls - $8-$15\n🍱 Bento Boxes - $12-$18\n🍜 Ramen Bowls - $10-$14\n🥟 Appetizers - $5-$8\n\nWould you like recommendations based on dietary preferences?",
+                quickReplies: ['Vegetarian Options', 'Gluten-Free', 'Chef Specials']
+            },
+            reservation: {
+                response: "📅 I'd be happy to help with reservations!\n\nPlease provide:\n• Date & Time\n• Number of guests\n• Any special requests\n\nOr call us at: (555) 123-4567",
+                quickReplies: ['Today 7PM', 'Tomorrow 6PM', 'Weekend']
+            },
+            hours: {
+                response: "🕐 Opening Hours:\n\nMon-Thu: 11:30 AM - 10:00 PM\nFri-Sat: 11:30 AM - 11:00 PM\nSunday: 12:00 PM - 9:00 PM\n\nHappy Hour: 3-6 PM Daily! 🍶",
+                quickReplies: ['Delivery Hours', 'Holiday Hours']
+            },
+            recommend: {
+                response: "⭐ Chef's Recommendations:\n\n1. Dragon Roll - Our signature!\n2. Chirashi Bowl - Fresh & colorful\n3. Tonkotsu Ramen - Rich & creamy\n4. Salmon Lover's Bento - Best value!\n\nAny dietary restrictions I should know?",
+                quickReplies: ['Vegetarian', 'Spicy Options', 'Kids Menu']
+            },
+            vegetarian: {
+                response: "🥬 Vegetarian Options:\n\n• Veggie Roll - $8\n• Avocado Cucumber Roll - $7\n• Vegetable Tempura - $9\n• Tofu Teriyaki Bento - $12\n• Miso Ramen (veggie broth) - $11\n\nAll made fresh daily!",
+                quickReplies: ['Order Now', 'Vegan Options']
+            },
+            delivery: {
+                response: "🚗 Delivery Info:\n\n• Free delivery over $25\n• Delivery radius: 5 miles\n• Average time: 30-45 mins\n• Available through our app or UberEats/DoorDash\n\nReady to order?",
+                quickReplies: ['Order Online', 'Pickup Instead']
+            },
+            default: {
+                response: "I understand you're asking about that. Let me help! Our team specializes in authentic Japanese cuisine. Would you like to know about our menu, make a reservation, or get recommendations?",
+                quickReplies: ['Menu', 'Reservations', 'Recommendations']
+            }
+        };
+
+        function toggleChat() {
+            chatWindow.classList.toggle('active');
+            if (chatWindow.classList.contains('active')) {
+                chatInput.focus();
+            }
+        }
+
+        function addMessage(content, isUser = false, quickReplies = []) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            let messageHTML = `<div class="message-content">${content}`;
+            
+            if (quickReplies.length > 0 && !isUser) {
+                messageHTML += '<div class="quick-replies">';
+                quickReplies.forEach(reply => {
+                    messageHTML += `<button class="quick-reply-btn" onclick="sendQuickReply('${reply.toLowerCase().replace(/\s+/g, '')}')">${reply}</button>`;
+                });
+                messageHTML += '</div>';
+            }
+            
+            messageHTML += '</div>';
+            messageDiv.innerHTML = messageHTML;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTyping() {
+            typingIndicator.classList.add('active');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTyping() {
+            typingIndicator.classList.remove('active');
+        }
+
+        function getAIResponse(userMessage) {
+            const lowerMessage = userMessage.toLowerCase();
+            
+            // Smart keyword matching
+            if (lowerMessage.includes('menu') || lowerMessage.includes('food') || lowerMessage.includes('eat')) {
+                return knowledgeBase.menu;
+            } else if (lowerMessage.includes('reserv') || lowerMessage.includes('book') || lowerMessage.includes('table')) {
+                return knowledgeBase.reservation;
+            } else if (lowerMessage.includes('hour') || lowerMessage.includes('open') || lowerMessage.includes('close') || lowerMessage.includes('time')) {
+                return knowledgeBase.hours;
+            } else if (lowerMessage.includes('recommend') || lowerMessage.includes('suggest') || lowerMessage.includes('popular') || lowerMessage.includes('best')) {
+                return knowledgeBase.recommend;
+            } else if (lowerMessage.includes('vegetarian') || lowerMessage.includes('veggie') || lowerMessage.includes('vegan')) {
+                return knowledgeBase.vegetarian;
+            } else if (lowerMessage.includes('deliver') || lowerMessage.includes('order') || lowerMessage.includes('takeout')) {
+                return knowledgeBase.delivery;
+            } else {
+                return knowledgeBase.default;
+            }
+        }
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+            
+            // Add user message
+            addMessage(message, true);
+            chatInput.value = '';
+            
+            // Show typing indicator
+            showTyping();
+            
+            // Simulate AI processing delay
+            setTimeout(() => {
+                hideTyping();
+                const aiResponse = getAIResponse(message);
+                addMessage(aiResponse.response, false, aiResponse.quickReplies || []);
+            }, 1000 + Math.random() * 1000);
+        }
+
+        function sendQuickReply(topic) {
+            const topicMap = {
+                'menu': 'Tell me about your menu',
+                'reservation': 'I want to make a reservation',
+                'hours': 'What are your opening hours?',
+                'recommend': 'What do you recommend?',
+                'vegetarianoptions': 'Show me vegetarian options',
+                'vegetarian': 'I want vegetarian food',
+                'delivery': 'Do you deliver?',
+                'ordernow': 'I want to order now',
+                'glutenfree': 'Do you have gluten-free options?',
+                'chefspecials': 'What are the chef specials?',
+                'today7pm': 'Reservation for today at 7 PM',
+                'tomorrow6pm': 'Reservation for tomorrow at 6 PM',
+                'weekend': 'Reservation for this weekend',
+                'spicyoptions': 'Show me spicy options',
+                'kidsmenu': 'Do you have a kids menu?',
+                'veganoptions': 'What vegan options do you have?',
+                'pickupinstead': 'I prefer pickup',
+                'orderonline': 'How do I order online?',
+                'deliveryhours': 'What are delivery hours?',
+                'holidayhours': 'What are your holiday hours?'
+            };
+            
+            const message = topicMap[topic] || topic;
+            chatInput.value = message;
+            sendMessage();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
         // Create floating particles
         const particlesContainer = document.getElementById('particles');
         for (let i = 0; i < 50; i++) {
