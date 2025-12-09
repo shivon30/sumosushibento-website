@@ -209,6 +209,7 @@
             transition: all 0.3s ease;
             animation: slideIn 0.8s ease-out;
             box-shadow: 0 5px 20px rgba(59,130,246,0.2);
+            cursor: pointer;
         }
         
         .feature-card:hover {
@@ -298,6 +299,129 @@
         .gallery-overlay h3 {
             color: white;
             font-size: 1.3rem;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            animation: fadeIn 0.3s;
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .modal-close:hover {
+            background: #1e3a8a;
+            transform: rotate(90deg);
+        }
+        
+        .modal h2 {
+            color: #1e3a8a;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+        
+        .modal-body {
+            color: #475569;
+            line-height: 1.8;
+        }
+        
+        .voice-input-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .voice-input-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(59,130,246,0.4);
+        }
+        
+        .voice-input-btn.listening {
+            animation: voicePulse 1s infinite;
+        }
+        
+        @keyframes voicePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(59,130,246,0.7); }
+            50% { box-shadow: 0 0 0 20px rgba(59,130,246,0); }
+        }
+        
+        .analytics-display {
+            background: #f0f9ff;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            border: 2px solid #3b82f6;
+        }
+        
+        .analytics-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #dbeafe;
+        }
+        
+        .analytics-item:last-child {
+            border-bottom: none;
+        }
+        
+        .analytics-label {
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+        
+        .analytics-value {
+            color: #3b82f6;
+            font-weight: 700;
         }
         
         /* AI Chatbot Widget */
@@ -645,6 +769,9 @@
                 left: 1rem;
                 height: 500px;
             }
+            .modal-content {
+                padding: 2rem 1.5rem;
+            }
         }
     </style>
 </head>
@@ -673,32 +800,32 @@
     <section class="features" id="features">
         <h2>✨ AI-Powered Features</h2>
         <div class="feature-grid">
-            <div class="feature-card">
+            <div class="feature-card" onclick="openModal('menuAssistant')">
                 <div class="feature-icon">🤖</div>
                 <h3>AI Menu Assistant</h3>
                 <p>Get personalized recommendations based on your preferences and dietary restrictions using advanced AI algorithms.</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card" onclick="openModal('smartOrdering')">
                 <div class="feature-icon">📱</div>
                 <h3>Smart Ordering</h3>
                 <p>Voice-activated ordering system powered by natural language processing for seamless customer experience.</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card" onclick="openModal('predictiveAnalytics')">
                 <div class="feature-icon">🎯</div>
                 <h3>Predictive Analytics</h3>
                 <p>AI-driven insights predict peak hours and optimize your dining experience with minimal wait times.</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card" onclick="openModal('qualityAssurance')">
                 <div class="feature-icon">🌟</div>
                 <h3>Quality Assurance</h3>
                 <p>Computer vision technology ensures every dish meets our highest standards before serving.</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card" onclick="toggleChat()">
                 <div class="feature-icon">💬</div>
                 <h3>24/7 Chat Support</h3>
                 <p>Intelligent chatbot available round-the-clock to answer questions and take reservations.</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card" onclick="window.open('https://dinesafe.sumosushibento.com/', '_blank')">
                 <div class="feature-icon">🔒</div>
                 <h3>DineSafe Certified</h3>
                 <p>Real-time health and safety monitoring with transparent ratings you can trust.</p>
@@ -736,6 +863,166 @@
             </div>
         </div>
     </section>
+
+    <!-- Modals for AI Features -->
+    <div id="menuAssistantModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('menuAssistantModal')">×</button>
+            <h2>🤖 AI Menu Assistant</h2>
+            <div class="modal-body">
+                <p><strong>Personalized Recommendations Powered by AI</strong></p>
+                <p>Our intelligent menu assistant learns your preferences and dietary needs to suggest the perfect dishes for you.</p>
+                
+                <div style="margin: 1.5rem 0;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #1e3a8a;">Select Your Preferences:</label>
+                    <select id="dietaryPref" style="width: 100%; padding: 0.75rem; border: 2px solid #dbeafe; border-radius: 10px; margin-bottom: 1rem;">
+                        <option value="">Choose dietary preference...</option>
+                        <option value="vegetarian">Vegetarian</option>
+                        <option value="vegan">Vegan</option>
+                        <option value="glutenfree">Gluten-Free</option>
+                        <option value="spicy">Spicy Lover</option>
+                        <option value="mild">Mild Flavors</option>
+                        <option value="seafood">Seafood Lover</option>
+                    </select>
+                    
+                    <button onclick="getAIRecommendation()" class="voice-input-btn">
+                        Get AI Recommendation
+                    </button>
+                </div>
+                
+                <div id="recommendationResult" style="display: none;" class="analytics-display">
+                    <h3 style="color: #1e3a8a; margin-bottom: 1rem;">Your Personalized Recommendations:</h3>
+                    <div id="recommendationText"></div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #64748b;">
+                        For complete menu and pricing, visit our <a href="https://dinesafe.sumosushibento.com/" target="_blank">DineSafe page</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="smartOrderingModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('smartOrderingModal')">×</button>
+            <h2>📱 Smart Voice Ordering</h2>
+            <div class="modal-body">
+                <p><strong>Order Using Your Voice - Powered by AI</strong></p>
+                <p>Simply speak your order and our AI will understand and process it instantly.</p>
+                
+                <div style="text-align: center; margin: 2rem 0;">
+                    <button id="voiceBtn" onclick="startVoiceOrder()" class="voice-input-btn">
+                        🎤 Start Voice Order
+                    </button>
+                    <p id="voiceStatus" style="margin-top: 1rem; color: #64748b; font-style: italic;"></p>
+                </div>
+                
+                <div id="voiceOrderResult" style="display: none;" class="analytics-display">
+                    <h3 style="color: #1e3a8a; margin-bottom: 1rem;">Your Order:</h3>
+                    <div id="voiceOrderText"></div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #64748b;">
+                        To complete your order, please visit our <a href="https://dinesafe.sumosushibento.com/" target="_blank">DineSafe page</a> or call us.
+                    </p>
+                </div>
+                
+                <div style="margin-top: 2rem; padding: 1rem; background: #f0f9ff; border-radius: 10px;">
+                    <p style="font-size: 0.9rem; color: #475569;">
+                        <strong>Try saying:</strong><br>
+                        "I'd like to order a Dragon Roll and Miso Soup"<br>
+                        "Add a California Roll to my order"<br>
+                        "I want the Salmon Bento Box"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="predictiveAnalyticsModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('predictiveAnalyticsModal')">×</button>
+            <h2>🎯 Predictive Analytics</h2>
+            <div class="modal-body">
+                <p><strong>AI-Powered Restaurant Insights</strong></p>
+                <p>Our machine learning algorithms analyze patterns to optimize your dining experience.</p>
+                
+                <div class="analytics-display">
+                    <h3 style="color: #1e3a8a; margin-bottom: 1rem;">Current Predictions:</h3>
+                    <div class="analytics-item">
+                        <span class="analytics-label">Current Wait Time:</span>
+                        <span class="analytics-value" id="waitTime">Loading...</span>
+                    </div>
+                    <div class="analytics-item">
+                        <span class="analytics-label">Peak Hour Today:</span>
+                        <span class="analytics-value" id="peakHour">Loading...</span>
+                    </div>
+                    <div class="analytics-item">
+                        <span class="analytics-label">Crowd Level:</span>
+                        <span class="analytics-value" id="crowdLevel">Loading...</span>
+                    </div>
+                    <div class="analytics-item">
+                        <span class="analytics-label">Best Time to Visit:</span>
+                        <span class="analytics-value" id="bestTime">Loading...</span>
+                    </div>
+                    <div class="analytics-item">
+                        <span class="analytics-label">Today's Popular Dish:</span>
+                        <span class="analytics-value" id="popularDish">Loading...</span>
+                    </div>
+                </div>
+                
+                <button onclick="refreshAnalytics()" class="voice-input-btn" style="margin-top: 1rem;">
+                    🔄 Refresh Analytics
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="qualityAssuranceModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('qualityAssuranceModal')">×</button>
+            <h2>🌟 AI Quality Assurance</h2>
+            <div class="modal-body">
+                <p><strong>Computer Vision for Perfect Dishes</strong></p>
+                <p>Every dish is analyzed by AI before serving to ensure it meets our quality standards.</p>
+                
+                <div class="analytics-display">
+                    <h3 style="color: #1e3a8a; margin-bottom: 1rem;">Quality Metrics:</h3>
+                    <div class="analytics-item">
+                        <span class="analytics-label">Presentation Score:</span>
+                        <span class="analytics-value">98.5%</span>
+                    </div>
+                    <div class="analytics-item">
+                        <span class="analytics-label">Portion Accuracy:</span>
+                        <span class="analytics-value">99.2%</span>
+                    </div>
+                    <div class="analytics-item">
+                        <span class="analytics-label">Temperature Check:</span>
+                        <span class="analytics-value">✓ Optimal</span>
+                    </div>
+                    <div class="analytics-item">
+                        <span class="analytics-label">Freshness Verified:</span>
+                        <span class="analytics-value">✓ Passed</span>
+                    </div>
+                    <div class="analytics-item">
+                        <span class="analytics-label">Visual Appeal:</span>
+                        <span class="analytics-value">Excellent</span>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem; padding: 1rem; background: #f0f9ff; border-radius: 10px;">
+                    <p style="font-size: 0.9rem; color: #475569;">
+                        <strong>How it works:</strong><br>
+                        1. AI cameras capture each dish before serving<br>
+                        2. Computer vision analyzes presentation, portions, and quality<br>
+                        3. Only dishes meeting our standards are served<br>
+                        4. Continuous learning improves accuracy over time
+                    </p>
+                </div>
+                
+                <p style="margin-top: 1rem; text-align: center;">
+                    <a href="https://dinesafe.sumosushibento.com/" target="_blank" style="color: #3b82f6; font-weight: 600;">View Our DineSafe Certification →</a>
+                </p>
+            </div>
+        </div>
+    </div>
 
     <!-- AI Chatbot Widget -->
     <div class="chatbot">
@@ -777,6 +1064,143 @@
     </div>
 
     <script>
+        // Modal Functions
+        function openModal(modalType) {
+            const modalIds = {
+                'menuAssistant': 'menuAssistantModal',
+                'smartOrdering': 'smartOrderingModal',
+                'predictiveAnalytics': 'predictiveAnalyticsModal',
+                'qualityAssurance': 'qualityAssuranceModal'
+            };
+            
+            const modalId = modalIds[modalType];
+            if (modalId) {
+                document.getElementById(modalId).classList.add('active');
+                
+                // Load analytics if predictive analytics modal
+                if (modalType === 'predictiveAnalytics') {
+                    loadPredictiveAnalytics();
+                }
+            }
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+        
+        // Close modal on outside click
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        }
+        
+        // AI Menu Assistant
+        function getAIRecommendation() {
+            const pref = document.getElementById('dietaryPref').value;
+            const resultDiv = document.getElementById('recommendationResult');
+            const textDiv = document.getElementById('recommendationText');
+            
+            if (!pref) {
+                alert('Please select a dietary preference first!');
+                return;
+            }
+            
+            const recommendations = {
+                'vegetarian': '🥬 <strong>Perfect for you:</strong><br>• Vegetable Tempura Roll<br>• Avocado Cucumber Roll<br>• Tofu Teriyaki Bento<br>• Vegetable Miso Ramen<br>• Edamame & Seaweed Salad',
+                'vegan': '🌱 <strong>Vegan Delights:</strong><br>• Cucumber Avocado Roll<br>• Vegetable Sushi Platter<br>• Vegan Ramen (Vegetable Broth)<br>• Wakame Seaweed Salad<br>• Steamed Edamame',
+                'glutenfree': '🌾 <strong>Gluten-Free Options:</strong><br>• Sashimi Platter<br>• Chirashi Bowl (no soy sauce)<br>• Grilled Salmon<br>• Seaweed Salad<br>• Fresh Nigiri Selection',
+                'spicy': '🌶️ <strong>Spicy Favorites:</strong><br>• Spicy Tuna Roll<br>• Dragon Roll with Spicy Mayo<br>• Spicy Ramen<br>• Volcano Roll<br>• Spicy Salmon Bento',
+                'mild': '😊 <strong>Mild & Delicious:</strong><br>• California Roll<br>• Salmon Nigiri<br>• Chicken Teriyaki Bento<br>• Mild Miso Ramen<br>• Tempura Udon',
+                'seafood': '🐟 <strong>Seafood Lover\'s Choice:</strong><br>• Sashimi Deluxe Platter<br>• Rainbow Roll<br>• Salmon Lover\'s Bento<br>• Seafood Ramen<br>• Tuna Tataki'
+            };
+            
+            textDiv.innerHTML = recommendations[pref] || 'Please select a valid preference.';
+            resultDiv.style.display = 'block';
+        }
+        
+        // Smart Voice Ordering
+        let isListening = false;
+        
+        function startVoiceOrder() {
+            const btn = document.getElementById('voiceBtn');
+            const status = document.getElementById('voiceStatus');
+            const resultDiv = document.getElementById('voiceOrderResult');
+            const orderText = document.getElementById('voiceOrderText');
+            
+            if (!isListening) {
+                isListening = true;
+                btn.classList.add('listening');
+                btn.innerHTML = '🎤 Listening...';
+                status.innerHTML = 'Listening for your order...';
+                
+                // Simulate voice recognition (in production, use Web Speech API)
+                setTimeout(() => {
+                    isListening = false;
+                    btn.classList.remove('listening');
+                    btn.innerHTML = '🎤 Start Voice Order';
+                    
+                    // Simulate recognized order
+                    const sampleOrders = [
+                        'Dragon Roll, Miso Soup, and Green Tea',
+                        'California Roll and Salmon Bento Box',
+                        'Spicy Tuna Roll, Edamame, and Sake',
+                        'Chirashi Bowl and Seaweed Salad',
+                        'Tonkotsu Ramen and Gyoza'
+                    ];
+                    
+                    const order = sampleOrders[Math.floor(Math.random() * sampleOrders.length)];
+                    orderText.innerHTML = `<strong>Recognized Order:</strong><br>${order}<br><br><em>AI Confidence: 95%</em>`;
+                    resultDiv.style.display = 'block';
+                    status.innerHTML = '✓ Order recognized successfully!';
+                }, 3000);
+            }
+        }
+        
+        // Predictive Analytics
+        function loadPredictiveAnalytics() {
+            const currentHour = new Date().getHours();
+            
+            // Simulate real-time data
+            const waitTimes = ['5-10 min', '10-15 min', '15-20 min', '20-30 min'];
+            const crowdLevels = ['Low', 'Moderate', 'Busy', 'Very Busy'];
+            const dishes = ['Dragon Roll', 'Salmon Bento', 'Tonkotsu Ramen', 'Chirashi Bowl', 'California Roll'];
+            
+            let peakHour = '7:00 PM - 8:30 PM';
+            let bestTime = '2:30 PM - 4:00 PM';
+            let waitTime = waitTimes[Math.floor(Math.random() * waitTimes.length)];
+            let crowdLevel = crowdLevels[Math.floor(Math.random() * crowdLevels.length)];
+            let popularDish = dishes[Math.floor(Math.random() * dishes.length)];
+            
+            // Adjust based on time of day
+            if (currentHour >= 12 && currentHour < 14) {
+                crowdLevel = 'Busy';
+                waitTime = '15-20 min';
+            } else if (currentHour >= 18 && currentHour < 21) {
+                crowdLevel = 'Very Busy';
+                waitTime = '20-30 min';
+            } else if (currentHour >= 14 && currentHour < 17) {
+                crowdLevel = 'Low';
+                waitTime = '5-10 min';
+            }
+            
+            document.getElementById('waitTime').textContent = waitTime;
+            document.getElementById('peakHour').textContent = peakHour;
+            document.getElementById('crowdLevel').textContent = crowdLevel;
+            document.getElementById('bestTime').textContent = bestTime;
+            document.getElementById('popularDish').textContent = popularDish;
+        }
+        
+        function refreshAnalytics() {
+            document.getElementById('waitTime').textContent = 'Loading...';
+            document.getElementById('peakHour').textContent = 'Loading...';
+            document.getElementById('crowdLevel').textContent = 'Loading...';
+            document.getElementById('bestTime').textContent = 'Loading...';
+            document.getElementById('popularDish').textContent = 'Loading...';
+            
+            setTimeout(loadPredictiveAnalytics, 1000);
+        }
+        
         // AI Chatbot Logic
         const chatWindow = document.getElementById('chatWindow');
         const chatMessages = document.getElementById('chatMessages');
@@ -859,7 +1283,6 @@
         function getAIResponse(userMessage) {
             const lowerMessage = userMessage.toLowerCase();
             
-            // Smart keyword matching
             if (lowerMessage.includes('menu') || lowerMessage.includes('food') || lowerMessage.includes('eat') || lowerMessage.includes('price') || lowerMessage.includes('cost')) {
                 return knowledgeBase.menu;
             } else if (lowerMessage.includes('reserv') || lowerMessage.includes('book') || lowerMessage.includes('table')) {
@@ -883,14 +1306,11 @@
             const message = chatInput.value.trim();
             if (!message) return;
             
-            // Add user message
             addMessage(message, true);
             chatInput.value = '';
             
-            // Show typing indicator
             showTyping();
             
-            // Simulate AI processing delay
             setTimeout(() => {
                 hideTyping();
                 const aiResponse = getAIResponse(message);
