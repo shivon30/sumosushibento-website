@@ -15,15 +15,15 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: #1a365d;
             overflow-x: hidden;
         }
         
-        /* Animated gradient background */
+        /* Blue & White Animated gradient background */
         .hero {
             position: relative;
             height: 100vh;
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background: linear-gradient(-45deg, #1e3a8a, #3b82f6, #60a5fa, #dbeafe);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
             display: flex;
@@ -45,14 +45,13 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('https://nyc3.digitaloceanspaces.com/bhindi-drive/files/8c62e654-4bcf-45ec-80aa-9737f4f570ac/2025-12-09T08-11-52-142Z-16457c77-nano-banana-pro_1765267911929.jpg') center/cover;
-            opacity: 0.3;
-            animation: zoomIn 20s ease-in-out infinite alternate;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
         }
         
-        @keyframes zoomIn {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
         }
         
         .hero-content {
@@ -75,23 +74,44 @@
             }
         }
         
+        .logo {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            animation: logoFloat 3s ease-in-out infinite;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+        }
+        
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
         .hero h1 {
             font-size: 4rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
             animation: glow 2s ease-in-out infinite alternate;
+            color: white;
         }
         
         @keyframes glow {
-            from { text-shadow: 2px 2px 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3); }
-            to { text-shadow: 2px 2px 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.5); }
+            from { text-shadow: 2px 2px 10px rgba(255,255,255,0.5), 0 0 20px rgba(59,130,246,0.5); }
+            to { text-shadow: 2px 2px 20px rgba(255,255,255,0.8), 0 0 40px rgba(59,130,246,0.8); }
         }
         
         .hero p {
             font-size: 1.5rem;
             margin-bottom: 2rem;
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+            color: #f0f9ff;
         }
         
         .cta-buttons {
@@ -134,32 +154,34 @@
         }
         
         .btn-primary {
-            background: #ff6b6b;
-            color: white;
-            box-shadow: 0 5px 15px rgba(255,107,107,0.4);
+            background: white;
+            color: #1e3a8a;
+            box-shadow: 0 5px 15px rgba(255,255,255,0.4);
         }
         
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255,107,107,0.6);
+            box-shadow: 0 8px 25px rgba(255,255,255,0.6);
         }
         
         .btn-secondary {
-            background: white;
-            color: #ff6b6b;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background: #1e3a8a;
+            color: white;
+            border: 2px solid white;
+            box-shadow: 0 5px 15px rgba(30,58,138,0.4);
         }
         
         .btn-secondary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(30,58,138,0.6);
+            background: #1e40af;
         }
         
-        /* AI Features Section */
+        /* AI Features Section - Blue & White */
         .features {
             padding: 5rem 2rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%);
+            color: #1e3a8a;
         }
         
         .features h2 {
@@ -167,6 +189,7 @@
             font-size: 3rem;
             margin-bottom: 3rem;
             animation: fadeIn 1s ease-out;
+            color: #1e3a8a;
         }
         
         .feature-grid {
@@ -178,19 +201,21 @@
         }
         
         .feature-card {
-            background: rgba(255,255,255,0.1);
+            background: white;
             backdrop-filter: blur(10px);
             padding: 2rem;
             border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 2px solid #3b82f6;
             transition: all 0.3s ease;
             animation: slideIn 0.8s ease-out;
+            box-shadow: 0 5px 20px rgba(59,130,246,0.2);
         }
         
         .feature-card:hover {
             transform: translateY(-10px) scale(1.02);
-            background: rgba(255,255,255,0.2);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            background: #f0f9ff;
+            box-shadow: 0 15px 40px rgba(59,130,246,0.4);
+            border-color: #1e3a8a;
         }
         
         .feature-icon {
@@ -201,19 +226,24 @@
         .feature-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
+            color: #1e3a8a;
         }
         
-        /* Interactive Gallery */
+        .feature-card p {
+            color: #475569;
+        }
+        
+        /* Interactive Gallery - Blue & White */
         .gallery {
             padding: 5rem 2rem;
-            background: #f8f9fa;
+            background: white;
         }
         
         .gallery h2 {
             text-align: center;
             font-size: 3rem;
             margin-bottom: 3rem;
-            color: #333;
+            color: #1e3a8a;
         }
         
         .gallery-grid {
@@ -230,7 +260,8 @@
             border-radius: 15px;
             cursor: pointer;
             height: 300px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(59,130,246,0.2);
+            border: 2px solid #dbeafe;
         }
         
         .gallery-item img {
@@ -238,6 +269,11 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 10px 30px rgba(59,130,246,0.4);
         }
         
         .gallery-item:hover img {
@@ -249,7 +285,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            background: linear-gradient(to top, rgba(30,58,138,0.9), transparent);
             padding: 1.5rem;
             transform: translateY(100%);
             transition: transform 0.3s ease;
@@ -264,7 +300,7 @@
             font-size: 1.3rem;
         }
         
-        /* Chatbot Widget */
+        /* Chatbot Widget - Blue & White */
         .chatbot {
             position: fixed;
             bottom: 2rem;
@@ -276,10 +312,10 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%);
+            border: 3px solid white;
             cursor: pointer;
-            box-shadow: 0 5px 20px rgba(102,126,234,0.5);
+            box-shadow: 0 5px 20px rgba(59,130,246,0.5);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -288,8 +324,8 @@
         }
         
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            0%, 100% { transform: scale(1); box-shadow: 0 5px 20px rgba(59,130,246,0.5); }
+            50% { transform: scale(1.1); box-shadow: 0 8px 30px rgba(59,130,246,0.8); }
         }
         
         /* Scroll animations */
@@ -309,7 +345,7 @@
             to { opacity: 1; }
         }
         
-        /* Floating particles */
+        /* Floating particles - Blue & White */
         .particles {
             position: absolute;
             width: 100%;
@@ -322,7 +358,7 @@
             position: absolute;
             width: 10px;
             height: 10px;
-            background: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.7);
             border-radius: 50%;
             animation: float 15s infinite;
         }
@@ -349,6 +385,7 @@
             .hero h1 { font-size: 2.5rem; }
             .hero p { font-size: 1.2rem; }
             .features h2, .gallery h2 { font-size: 2rem; }
+            .logo { width: 150px; height: 150px; }
         }
     </style>
 </head>
@@ -357,7 +394,10 @@
     <section class="hero">
         <div class="particles" id="particles"></div>
         <div class="hero-content">
-            <h1>🍣 Sumo Sushi Bento</h1>
+            <div class="logo">
+                <img src="https://nyc3.digitaloceanspaces.com/bhindi-drive/files/8c62e654-4bcf-45ec-80aa-9737f4f570ac/2025-12-09T08-49-20-001Z-83c93c3b-nano-banana-pro_1765270159757.png" alt="Sumo Sushi Bento Logo">
+            </div>
+            <h1>Sumo Sushi Bento</h1>
             <p>Experience Authentic Japanese Cuisine</p>
             <div class="cta-buttons">
                 <a href="https://dinesafe.sumosushibento.com/" target="_blank" class="btn btn-primary">
